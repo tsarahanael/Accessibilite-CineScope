@@ -10,7 +10,7 @@ type Props = {
 export default function WorkshopCard({ workshop, onReserve, extraAction }: Props) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <article className="workshop-card">
+    <article className="workshop-card" tabIndex={0}>
       <div className="card-art">
         {workshop.id === "serigraphie"
           ? <img src={workshop.image} />
