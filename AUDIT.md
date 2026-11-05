@@ -67,6 +67,23 @@ La text bar n'as aucun label dássocié.\
 ### Correction à apporter
 Ajouter les tags `aria-labelledby` et `aria-describedby` a l'élément `input`.
 
+## Problème 5 - images de l'atelier sérigraphie
+
+### Problème identifié
+L'image n'as pas de text alternatif.\
+A cause de cela certains lecteurs d'écrans liront le titre du fichier au lieu de l'ignorer comme les autres images. Ca crée de la pollution visuelle.
+
+### Reproduction
+Réaliser un audit lighthouse sur la page nous indique ce probleme dans la section "accessibilité". C'est également visible sur firefox dans l'onglet accessibité des devtools en effectuant une recherche des probèmes.
+
+En utilisant le lecteur d'écran nvda on entend le narateur lit le nom du fichier image.
+
+### Comportement attendu
+ L'images devroait etre ignoré par le lecteur d'ecrans.
+
+### Correction à apporter
+Enlever l'exeption mise en place pour le tag alt de l'imgage de l'atelier de céramique
+
 ## Composant créé
 
 Expliquez vos principaux choix d’accessibilité et les manipulations réalisées pour les vérifier.
