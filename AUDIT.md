@@ -8,7 +8,7 @@
 ## Problème 1 — Cartes Ateliers non accesible
 
 ### Problème identifié
- Dans la Section nommée "Les prochains ateliérs" les cartes des différents atteliers ne sont pas accéssible.\
+ Dans la Section nommée "Les prochains ateliérs" les cartes des différents atteliers ne sont pas focusable.\
  Cela rend le parcours de la page moins intuitif pour les utilisateurs limité au parcours par clavier.
 
 ### Reproduction
@@ -19,6 +19,21 @@
 
 ### Correction à apporter
 Ajouter un `tabindex` sur les titre de chaque cartes
+
+## Problème 2 — La section déroulable
+
+### Problème identifié
+ Dans la Section déroulable de chaque atelier n'est pas focusable et les élements cachées sont focusable sans les afficher.\
+ Cela rend le parcours de la page moins intuitif pour les utilisateurs limité au parcours par clavier.
+
+### Reproduction
+ Parcourir l'application uniquement au clavier et essayer de focus le boutton "+" sur une carte. Observer que les lien "#infos-pratiques" est focus sans apparaitre a l'écran
+
+### Comportement attendu
+ Le focus dois passer sur le boutton plus et le lien dans la section "Details de l'atelier" ne doit etre accessible que si la section est dévoilée.
+
+### Correction à apporter
+Modifier le boutton plus, qui est actuellement une `div`, en un boutton et  utiliser l'attribut `hidden` sur la section caché au lieu de `aria-hidden`
 
 
 ## Composant créé
