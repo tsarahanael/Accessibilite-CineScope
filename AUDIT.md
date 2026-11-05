@@ -117,8 +117,18 @@ Ajouter un `aria-label` aux bouttons et links.
 
 ## Composant créé
 
-Expliquez vos principaux choix d’accessibilité et les manipulations réalisées pour les vérifier.
+La commande « Poser une question » ouvre une modale native `<dialog>` propre à chaque atelier, y compris lorsque celui-ci est complet. Le focus est placé sur le sélecteur natif à l’ouverture ; la touche Échap, le bouton de fermeture et « Annuler » ferment la fenêtre sans envoyer de demande, puis le focus revient au bouton d’ouverture. Le dialogue natif conserve le parcours clavier dans la modale.
+
+Les trois champs sont associés à des labels, sont obligatoires et disposent d’un texte d’aide. Le select n’a aucun sujet sélectionné initialement. La validation est réalisée avec `readRequest` ; en cas d’erreur, un résumé reçoit le focus, ses liens mènent au champ à corriger et les erreurs sont reliées aux champs. Les valeurs saisies restent présentes après une tentative invalide. Après une demande valide, la modale se ferme et un statut annonce l’atelier et le sujet, sans reprendre l’adresse électronique. L’envoi est uniquement simulé.
+
+Vérifications : clavier utilisé pour ouvrir la modale, parcourir les champs et actions, soumettre un formulaire invalide, rejoindre un champ depuis le résumé, corriger puis soumettre, fermer avec « Annuler » et contrôler le retour du focus. Les tests de `src/__tests__/Composant.test.tsx` couvrent aussi l’atelier complet, les erreurs, la confirmation et l’absence de coordonnées dans celle-ci.
 
 ## Mini-test
 
-Indiquez le fichier, le résultat et ce que le test permet de vérifier.
+Dans `src/__tests__/Composant.test.tsx`, le test « conserve le sujet et la question après un envoi sans courriel, puis confirme l’atelier et le sujet après correction » suit le scénario demandé avec `render(<App />)` et `userEvent` :
+
+- ouvre « Poser une question » pour « Une tasse en céramique », choisit « Le matériel à apporter » et rédige une question ;
+- tente l’envoi sans adresse électronique et vérifie que l’erreur est affichée, que la modale reste ouverte, que le sujet et la question sont conservés et qu’aucune confirmation n’apparaît ;
+- saisit une adresse valide puis vérifie la fermeture de la modale et la confirmation de l’atelier et du sujet.
+
+Résultat : le test passe. Il vérifie la possibilité de corriger un envoi incomplet et la bonne association de la demande à l’atelier et au sujet choisis.

@@ -1,23 +1,52 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import WorkshopCard from "./components/WorkshopCard";
+import RequestDialog from "./components/RequestDialog";
+import { requestOptions, type RequestValues } from "./requests";
 import { workshops, type Workshop } from "./workshops";
 
 export default function App() {
   const [query, setQuery] = useState("");
   const [notice, setNotice] = useState("");
   const [bookingCount, setBookingCount] = useState(0);
+  const [questionWorkshop, setQuestionWorkshop] = useState<Workshop | null>(null);
+  const questionOpenerRef = useRef<HTMLButtonElement | null>(null);
+  const restoreQuestionFocusRef = useRef(false);
   const normalized = query.trim().toLocaleLowerCase("fr");
   const visible = workshops.filter(workshop =>
     `${workshop.title} ${workshop.location}`.toLocaleLowerCase("fr").includes(normalized),
   );
 
   const noticeRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (notice) noticeRef.current?.focus();
+  }, [notice]);
+
+  useEffect(() => {
+    if (!questionWorkshop && restoreQuestionFocusRef.current) {
+      restoreQuestionFocusRef.current = false;
+      questionOpenerRef.current?.focus();
+    }
+  }, [questionWorkshop]);
+
+  const closeQuestion = () => {
+    restoreQuestionFocusRef.current = true;
+    setQuestionWorkshop(null);
+  };
+
   const reserve = (workshop: Workshop) => {
     if (!workshop.available) return;
     const next = bookingCount + 1;
     setBookingCount(next);
     setNotice(`Préinscription de démonstration n° ${next} enregistrée pour ${workshop.title}. Aucun paiement ni réservation réelle.`);
-    noticeRef.current?.focus();
+  };
+
+  const submitQuestion = (values: RequestValues) => {
+    const subject = requestOptions.question.find(option => option.value === values.choice);
+    if (!subject) throw new Error(`Sujet de question invalide : ${values.choice}`);
+    const workshop = workshops.find(item => item.id === values.workshopId);
+    if (!workshop) throw new Error(`Atelier introuvable : ${values.workshopId}`);
+    setNotice(`Votre question sur « ${subject.label} » pour l’atelier « ${workshop.title} » a bien été enregistrée. Aucun message ni aucune coordonnée ne seront transmis.`);
+    setQuestionWorkshop(null);
   };
 
   return (
@@ -44,7 +73,26 @@ export default function App() {
           </div>
           {visible.length > 0 ? (
             <div className="workshop-grid">
-              {visible.map(workshop => <WorkshopCard key={workshop.id} workshop={workshop} onReserve={reserve} />)}
+              {visible.map(workshop => (
+                <WorkshopCard
+                  key={workshop.id}
+                  workshop={workshop}
+                  onReserve={reserve}
+                  extraAction={
+                    <button
+                      type="button"
+                      className="contact-button"
+                      aria-label={`Poser une question au sujet de ${workshop.title}`}
+                      onClick={event => {
+                        questionOpenerRef.current = event.currentTarget;
+                        setQuestionWorkshop(workshop);
+                      }}
+                    >
+                      Poser une question
+                    </button>
+                  }
+                />
+              ))}
             </div>
           ) : <p className="empty-state">Aucun atelier ne correspond. Essayez un autre titre ou une autre ville.</p>}
         </section>
@@ -52,11 +100,18 @@ export default function App() {
           <p id="how-eyebrow" className="eyebrow">À votre rythme</p><h2 id="how-title">Une découverte, simplement.</h2>
           <div className="how-grid"><div><span>01</span><h3>Choisissez votre atelier</h3><p>Retrouvez le lieu, la durée et le tarif dans le programme.</p></div><div><span>02</span><h3>Préparez votre venue</h3><p>Consultez les détails pour savoir ce qui est fourni et ce qu’il faut apporter.</p></div><div><span>03</span><h3>Prenez le temps de créer</h3><p>Les ateliers présentés ici sont fictifs. Toutes les actions sont des démonstrations locales.</p></div></div>
         </section>
-        <div className="registration-result" ref={noticeRef} tabIndex={-1}>
+        <div className="registration-result" ref={noticeRef} tabIndex={-1} role="status" aria-live="polite" aria-atomic="true">
           <p className={notice ? "notice" : "notice-empty"}>{notice}</p>
         </div>
       </main>
       <footer><a className="brand" href="#accueil">Atelier<span>Local</span></a><p>Application pédagogique · Aucun envoi ni paiement réel.</p></footer>
+      {questionWorkshop && (
+        <RequestDialog
+          workshop={questionWorkshop}
+          onClose={closeQuestion}
+          onSubmit={submitQuestion}
+        />
+      )}
     </>
   );
 }
