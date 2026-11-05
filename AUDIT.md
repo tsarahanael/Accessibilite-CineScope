@@ -100,6 +100,21 @@ Ouvrir les devtools du navigateur, acceder a l'onglet "Accessibilité" et select
 ### Correction à apporter
 Ajouter un id aux eyebrows et le référencer pour le nom des sections.
 
+## Problème 7 - labels des bouttons et links
+
+### Problème identifié
+Les bouttons et links de la page n'avaient pas d'aria-label.
+A cause de ça, les lecteurs de navigateur ne les supportent pas bien.
+
+### Reproduction
+En utilisant le lecteur d'écrans nvda on ne peut pas savoir ce à quoi sert le boutton ou lien.
+
+### Comportement attendu
+ Les bouttons et links doivent pouvoir être décrits.
+
+### Correction à apporter
+Ajouter un `aria-label` aux bouttons et links.
+
 ## Composant créé
 
 Expliquez vos principaux choix d’accessibilité et les manipulations réalisées pour les vérifier.

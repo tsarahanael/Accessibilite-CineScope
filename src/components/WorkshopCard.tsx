@@ -30,12 +30,14 @@ export default function WorkshopCard({ workshop, onReserve, extraAction }: Props
         <div className={"details-panel " + (expanded ? "is-open" : "")} hidden={!expanded}>
           <div className="details-inner">
             <p>{workshop.description}</p>
-            <a href="#infos-pratiques">Consulter les informations pratiques</a>
+            <a aria-label={`Consulter les informations pratiques pour l'atelier ${workshop.title}`} href="#infos-pratiques">
+              Consulter les informations pratiques
+            </a>
           </div>
         </div>
         <div className="card-actions">
           {workshop.available ? (
-            <button type="button" className="reserve-button" onClick={() => onReserve(workshop)}>
+            <button aria-label={`S'inscrire à l'atelier ${workshop.title}`} type="button" className="reserve-button" onClick={() => onReserve(workshop)}>
               M’inscrire à {workshop.title}
             </button>
           ) : <p className="closed-message">Inscriptions closes</p>}

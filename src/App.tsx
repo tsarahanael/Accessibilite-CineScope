@@ -22,17 +22,17 @@ export default function App() {
 
   return (
     <>
-      <a className="skip-link" href="#catalogue">Aller aux ateliers</a>
+      <a aria-label="Aller aux ateliers" className="skip-link" href="#catalogue">Aller aux ateliers</a>
       <header className="site-header">
         <a className="brand" href="#accueil">Atelier<span>Local</span><span className="brand-dot" aria-hidden="true">●</span></a>
-        <nav aria-label="Navigation principale"><a href="#catalogue">Les ateliers</a><a href="#infos-pratiques">Comment ça marche ?</a></nav>
+        <nav aria-label="Navigation principale"><a aria-label="Voir les ateliers" href="#catalogue">Les ateliers</a><a aria-label="Voir les informations pratiques" href="#infos-pratiques">Comment ça marche ?</a></nav>
       </header>
       <main id="accueil">
         <section className="hero" aria-labelledby="page-eyebrow">
           <div id="page-eyebrow" className="eyebrow">Des savoir-faire à partager</div>
           <h1 id="page-title">Un atelier.<br /><em>De nouvelles idées.</em></h1>
           <p>Créer de ses mains, découvrir un lieu et prendre le temps d’apprendre ensemble.</p>
-          <a className="hero-link" href="#catalogue">Trouver mon prochain atelier <span aria-hidden="true">↗</span></a>
+          <a aria-label="Trouver mon prochain atelier" className="hero-link" href="#catalogue">Trouver mon prochain atelier <span aria-hidden="true">↗</span></a>
           <div className="hero-note">Lille & Roubaix · Petits groupes · Tous niveaux</div>
         </section>
         <section className="catalogue" id="catalogue" aria-labelledby="catalogue-eyebrow">
