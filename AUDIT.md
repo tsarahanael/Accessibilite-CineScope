@@ -8,7 +8,7 @@
 ## Problème 1 — Cartes Ateliers non accesible
 
 ### Problème identifié
- Dans la Section nommée "Les prochains ateliérs" les cartes des différents atteliers ne sont pas focusable.\
+ Dans la Section nommée "Les prochains ateliers" les cartes des différents atteliers ne sont pas focusable.\
  Cela rend le parcours de la page moins intuitif pour les utilisateurs limité au parcours par clavier.
 
 ### Reproduction
@@ -33,14 +33,14 @@ Ajouter un `tabindex` sur les titre de chaque cartes
  Le focus dois passer sur le boutton plus et le lien dans la section "Details de l'atelier" ne doit etre accessible que si la section est dévoilée.
 
 ### Correction à apporter
-Modifier le boutton plus, qui est actuellement une `div`, en un boutton et  utiliser l'attribut `hidden` sur la section caché au lieu de `aria-hidden`.
+Modifier le boutton plus, qui est actuellement une `div`, en un boutton et  utiliser l'attribut `hidden` sur la section cachée au lieu de `aria-hidden`.
 Ajouter une description `aria-label` pour le lecteur de navigateur qui précise pour quel atelier nous ouvrons les details.
 
 ## Problème 3 - Boutton d'inscription non focusable
 
 ### Problème identifié
-Le boutton d'inscription a un ateleir n'as pas d'indicateur visual lors se qu'il as le focus et quand il est cliqué un message s'affiche sur lapage mais n'est pas mis en focus.\
- Cela invisibilise le boutton pour les utilisateurs clavier et les utilisateurs peuvent ne pas comprendre quel action ce boutton réalise (ce qui a été notre cas).
+Le boutton d'inscription a un atelier n'a pas d'indicateur visuel lorsqu'il a le focus, et quand il est cliqué un message s'affiche sur la page mais n'est pas mis en focus.\
+ Cela invisibilise le boutton pour les utilisateurs clavier et les utilisateurs peuvent ne pas comprendre quelle action ce boutton réalise (ce qui a été notre cas).
 
 ### Reproduction
  Parcourir l'application uniquement au clavier et essayer de focus le boutton "M'inscrire à \<Titre de l'atelier\>" sur une carte. Oserver que l'on a pas d'indicateur visuel du focus lorsqu'il passe sur le boutton.\
@@ -55,15 +55,15 @@ Retirer le style css `outline: none` de la classe `reserve-button:focus-visible`
 ## Problème 4 - La text bar
 
 ### Problème identifié
-La text bar n'as aucun label dássocié.\
- Quand le focus sera sur la textbar un lecteur d'écrans ne pourras pas indiquer a l'utilisateur l'utilité de celle ci
+La text bar n'a aucun label d'associé.\
+ Quand le focus sera sur la textbar un lecteur d'écran ne pourra pas indiquer a l'utilisateur l'utilité de celle ci
 
 ### Reproduction
- Ouvris les devtools du navigateur, acceder a l'onglet "Accessibilité" et selectionner le searchbox.\
- On observe que searchbox n'as aucun laber ou description
+ Ouvrir les devtools du navigateur, acceder a l'onglet "Accessibilité" et selectionner la searchbox.\
+ On observe que searchbox n'a aucun label ou description
 
 ### Comportement attendu
- L'element devrai etre labelé par le text au dessu "Rechercher un atelier" et le text en dessoud "Saisissew un titre ou une ville" devrais etre lier a la searchbox en tant qu'indice.
+ L'element devrait etre labelé par le text au dessus "Rechercher un atelier" et le text en dessous "Saisissez un titre ou une ville" devrait etre lier a la searchbox en tant qu'indice.
 
 ### Correction à apporter
 Ajouter les tags `aria-labelledby` et `aria-describedby` a l'élément `input`.
@@ -71,36 +71,34 @@ Ajouter les tags `aria-labelledby` et `aria-describedby` a l'élément `input`.
 ## Problème 5 - images de l'atelier sérigraphie
 
 ### Problème identifié
-L'image n'as pas de text alternatif.\
-A cause de cela certains lecteurs d'écrans liront le titre du fichier au lieu de l'ignorer comme les autres images. Ca crée de la pollution visuelle.
+L'image n'as pas de texte alternatif.   
+A cause de cela certains lecteurs d'écrans liront le titre du fichier au lieu de l'ignorer comme les autres images. Cela crée de la pollution visuelle.
 
 ### Reproduction
-Réaliser un audit lighthouse sur la page nous indique ce probleme dans la section "accessibilité". C'est également visible sur firefox dans l'onglet accessibité des devtools en effectuant une recherche des probèmes.
+Réaliser un audit lighthouse sur la page nous indique ce probleme dans la section "accessibilité". C'est également visible sur firefox dans l'onglet accessibité des devtools en effectuant une recherche des problèmes.
 
-En utilisant le lecteur décrans nvda on entend le narateur decrirt l'image.
+En utilisant le lecteur d'écrans nvda on entend le narrateur décrire l'image.
 
 ### Comportement attendu
- Les images devront etre labelé par un text descriptif de l'image.
+ Les images devront etre labelées par un text descriptif de l'image.
 
 ### Correction à apporter
-Ajouter une propriété "image description" a l'object workshop puis la lier a un tag `alt` dans l'élément `img`
+Ajouter une propriété "image description" a l'object workshop puis la lier a un tag `alt` dans l'élément `img`. Créer un champ imgAlt dans les workshops décrivant l'image pour mettre un texte dans le tag.
 
-## Problème 6 - 
+## Problème 6 - nom des sections
 
 ### Problème identifié
-L'image n'as pas de text alternatif.\
-A cause de cela certains lecteurs d'écrans liront le titre du fichier au lieu de l'ignorer comme les autres images. Ca crée de la pollution visuelle.
+Le nom donné aux sections sont les noms de titres à l'intérieur, mais qui ne décrivent pas réellement le but de la section.
 
 ### Reproduction
-Réaliser un audit lighthouse sur la page nous indique ce probleme dans la section "accessibilité". C'est également visible sur firefox dans l'onglet accessibité des devtools en effectuant une recherche des probèmes.
-
-En utilisant le lecteur décrans nvda on entend le narateur decrirt l'image.
+Ouvrir les devtools du navigateur, acceder a l'onglet "Accessibilité" et selectionner une section.\
+ On observe que la section a un nom qui ne décrit pas correctement son but
 
 ### Comportement attendu
- Les images devront etre labelé par un text descriptif de l'image.
+ Les sections devront etre labelées par leur eyebrow, décrivant réellement le but.
 
 ### Correction à apporter
-Ajouter une propriété "image description" a l'object workshop puis la lier a un tag `alt` dans l'élément `img`
+Ajouter un id aux eyebrows et le référencer pour le nom des sections.
 
 ## Composant créé
 

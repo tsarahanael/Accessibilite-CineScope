@@ -12,7 +12,7 @@ export default function WorkshopCard({ workshop, onReserve, extraAction }: Props
   return (
     <article className="workshop-card" tabIndex={0}>
       <div className="card-art">
-        <img src={workshop.image} alt="" />
+        <img src={workshop.image} alt={workshop.imageAlt} />
         <span className="category">{workshop.category}</span>
       </div>
       <div className="card-body">
