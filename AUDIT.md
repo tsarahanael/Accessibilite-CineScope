@@ -33,7 +33,8 @@ Ajouter un `tabindex` sur les titre de chaque cartes
  Le focus dois passer sur le boutton plus et le lien dans la section "Details de l'atelier" ne doit etre accessible que si la section est dévoilée.
 
 ### Correction à apporter
-Modifier le boutton plus, qui est actuellement une `div`, en un boutton et  utiliser l'attribut `hidden` sur la section caché au lieu de `aria-hidden`
+Modifier le boutton plus, qui est actuellement une `div`, en un boutton et  utiliser l'attribut `hidden` sur la section caché au lieu de `aria-hidden`.
+Ajouter une description `aria-label` pour le lecteur de navigateur qui précise pour quel atelier nous ouvrons les details.
 
 ## Problème 3 - Boutton d'inscription non focusable
 
@@ -76,13 +77,30 @@ A cause de cela certains lecteurs d'écrans liront le titre du fichier au lieu d
 ### Reproduction
 Réaliser un audit lighthouse sur la page nous indique ce probleme dans la section "accessibilité". C'est également visible sur firefox dans l'onglet accessibité des devtools en effectuant une recherche des probèmes.
 
-En utilisant le lecteur d'écran nvda on entend le narateur lit le nom du fichier image.
+En utilisant le lecteur décrans nvda on entend le narateur decrirt l'image.
 
 ### Comportement attendu
- L'images devroait etre ignoré par le lecteur d'ecrans.
+ Les images devront etre labelé par un text descriptif de l'image.
 
 ### Correction à apporter
-Enlever l'exeption mise en place pour le tag alt de l'imgage de l'atelier de céramique
+Ajouter une propriété "image description" a l'object workshop puis la lier a un tag `alt` dans l'élément `img`
+
+## Problème 6 - 
+
+### Problème identifié
+L'image n'as pas de text alternatif.\
+A cause de cela certains lecteurs d'écrans liront le titre du fichier au lieu de l'ignorer comme les autres images. Ca crée de la pollution visuelle.
+
+### Reproduction
+Réaliser un audit lighthouse sur la page nous indique ce probleme dans la section "accessibilité". C'est également visible sur firefox dans l'onglet accessibité des devtools en effectuant une recherche des probèmes.
+
+En utilisant le lecteur décrans nvda on entend le narateur decrirt l'image.
+
+### Comportement attendu
+ Les images devront etre labelé par un text descriptif de l'image.
+
+### Correction à apporter
+Ajouter une propriété "image description" a l'object workshop puis la lier a un tag `alt` dans l'élément `img`
 
 ## Composant créé
 

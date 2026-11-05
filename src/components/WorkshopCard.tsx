@@ -24,7 +24,7 @@ export default function WorkshopCard({ workshop, onReserve, extraAction }: Props
           <span className={"availability-dot " + (workshop.available ? "is-available" : "is-full")} aria-hidden="true" />
           {workshop.available ? "Places disponibles" : "Complet"}
         </p>
-        <button className="details-trigger" onClick={() => setExpanded(value => !value)}>
+        <button aria-label={expanded ? `Replier les détails de l’atelier ${workshop.title}` : `Voir les détails de l’atelier ${workshop.title}`} className="details-trigger" onClick={() => setExpanded(value => !value)}>
           Détails de l’atelier <span aria-hidden="true">{expanded ? "−" : "+"}</span>
         </button>
         <div className={"details-panel " + (expanded ? "is-open" : "")} hidden={!expanded}>
