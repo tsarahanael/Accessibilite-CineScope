@@ -57,6 +57,12 @@ export default function RequestDialog({ workshop, onClose, onSubmit }: RequestDi
       ref={dialogRef}
       aria-labelledby={ids.title}
       aria-describedby={ids.context}
+      onKeyDown={event => {
+        if (event.key === "Escape") {
+          event.preventDefault();
+          onClose();
+        }
+      }}
       onCancel={event => {
         event.preventDefault();
         onClose();

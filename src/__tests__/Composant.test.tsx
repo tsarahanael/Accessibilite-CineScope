@@ -6,7 +6,7 @@ import App from "../App";
 afterEach(cleanup);
 
 describe("Question à l’organisateur", () => {
-  it("ouvre une modale pour l’atelier choisi, y compris lorsqu’il est complet, et restaure le focus à la fermeture", async () => {
+  it("ouvre une modale pour l’atelier choisi, y compris lorsqu’il est complet, et restaure le focus après Échap", async () => {
     const user = userEvent.setup();
     render(<App />);
     const opener = screen.getByRole("button", { name: "Poser une question au sujet de Broder un petit paysage" });
@@ -21,10 +21,15 @@ describe("Question à l’organisateur", () => {
     expect(within(dialog).getByRole("option", { name: "Un autre sujet" })).toBeInTheDocument();
     expect(within(dialog).getByRole("combobox")).toHaveFocus();
 
-    await user.click(within(dialog).getByRole("button", { name: "Annuler" }));
+    await user.keyboard("{Escape}");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(opener).toHaveFocus();
     expect(screen.queryByText(/Votre question sur/)).not.toBeInTheDocument();
+
+    await user.click(opener);
+    await user.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Annuler" }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(opener).toHaveFocus();
   });
 
   it("conserve le sujet et la question après un envoi sans courriel, puis confirme l’atelier et le sujet après correction", async () => {

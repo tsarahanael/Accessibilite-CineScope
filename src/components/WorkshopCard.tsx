@@ -10,14 +10,14 @@ type Props = {
 export default function WorkshopCard({ workshop, onReserve, extraAction }: Props) {
   const [expanded, setExpanded] = useState(false);
   return (
-    <article className="workshop-card" tabIndex={0}>
+    <article className="workshop-card">
       <div className="card-art">
         <img src={workshop.image} alt={workshop.imageAlt} />
         <span className="category">{workshop.category}</span>
       </div>
       <div className="card-body">
         <p className="workshop-date">{workshop.date}</p>
-        <p className="workshop-title">{workshop.title}</p>
+        <h3 className="workshop-title" tabIndex={0}>{workshop.title}</h3>
         <p className="location">{workshop.location}</p>
         <div className="card-meta"><span>{workshop.duration}</span><span>{workshop.price}</span></div>
         <p className="availability">
