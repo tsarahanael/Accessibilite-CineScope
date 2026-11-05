@@ -51,6 +51,22 @@ Le boutton d'inscription a un ateleir n'as pas d'indicateur visual lors se qu'il
 ### Correction à apporter
 Retirer le style css `outline: none` de la classe `reserve-button:focus-visible` qui ne fait qu'invisibiliser le focus. Utiliser une `useRef` pour réferencer le message de resrvation et lui mettre le focus dans la fonction `reserve`. Ajouter la ref a l'élément correspondant au message et lui ajouter un tabIndex négatif pour qu'il reste innaccessible en parcous classique
 
+## Problème 4 - La text bar
+
+### Problème identifié
+La text bar n'as aucun label dássocié.\
+ Quand le focus sera sur la textbar un lecteur d'écrans ne pourras pas indiquer a l'utilisateur l'utilité de celle ci
+
+### Reproduction
+ Ouvris les devtools du navigateur, acceder a l'onglet "Accessibilité" et selectionner le searchbox.\
+ On observe que searchbox n'as aucun laber ou description
+
+### Comportement attendu
+ L'element devrai etre labelé par le text au dessu "Rechercher un atelier" et le text en dessoud "Saisissew un titre ou une ville" devrais etre lier a la searchbox en tant qu'indice.
+
+### Correction à apporter
+Ajouter les tags `aria-labelledby` et `aria-describedby` a l'élément `input`.
+
 ## Composant créé
 
 Expliquez vos principaux choix d’accessibilité et les manipulations réalisées pour les vérifier.
