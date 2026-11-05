@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import WorkshopCard from "./components/WorkshopCard";
 import { workshops, type Workshop } from "./workshops";
 
@@ -11,11 +11,13 @@ export default function App() {
     `${workshop.title} ${workshop.location}`.toLocaleLowerCase("fr").includes(normalized),
   );
 
+  const noticeRef = useRef<HTMLDivElement>(null);
   const reserve = (workshop: Workshop) => {
     if (!workshop.available) return;
     const next = bookingCount + 1;
     setBookingCount(next);
     setNotice(`Préinscription de démonstration n° ${next} enregistrée pour ${workshop.title}. Aucun paiement ni réservation réelle.`);
+    noticeRef.current?.focus();
   };
 
   return (
@@ -50,7 +52,7 @@ export default function App() {
           <p className="eyebrow">À votre rythme</p><h2 id="how-title">Une découverte, simplement.</h2>
           <div className="how-grid"><div><span>01</span><h3>Choisissez votre atelier</h3><p>Retrouvez le lieu, la durée et le tarif dans le programme.</p></div><div><span>02</span><h3>Préparez votre venue</h3><p>Consultez les détails pour savoir ce qui est fourni et ce qu’il faut apporter.</p></div><div><span>03</span><h3>Prenez le temps de créer</h3><p>Les ateliers présentés ici sont fictifs. Toutes les actions sont des démonstrations locales.</p></div></div>
         </section>
-        <div className="registration-result">
+        <div className="registration-result" ref={noticeRef} tabIndex={-1}>
           <p className={notice ? "notice" : "notice-empty"}>{notice}</p>
         </div>
       </main>
